@@ -16,22 +16,22 @@
 <script>
   export default {
     data:    () => ({
-        items: [
-          { title: 'Team blue', value: 'blue' },
-          { title: 'Team yellow', value: 'yellow' },
-          { title: 'Team red', value: 'red' },
-          { title: 'Team orange', value: 'orange' },
-          { title: 'Team brown', value: 'brown' },
-          { title: 'Team green', value: 'green' },
-          { title: 'Team purple', value: 'purple' },
-          { title: 'Team cyan', value: 'cyan' },
-          { title: 'Team black', value: 'black' },
-          { title: 'Team white', value: 'white' }
-        ]
-      }
+      items: [
+        { title: 'Team blue', value: 'blue' },
+        { title: 'Team yellow', value: 'yellow' },
+        { title: 'Team red', value: 'red' },
+        { title: 'Team orange', value: 'orange' },
+        { title: 'Team brown', value: 'brown' },
+        { title: 'Team green', value: 'green' },
+        { title: 'Team purple', value: 'purple' },
+        { title: 'Team cyan', value: 'cyan' },
+        { title: 'Team black', value: 'black' },
+        { title: 'Team white', value: 'white' }
+      ]
+    }
     ),
     created() {
-      if (!this.$cookies.get('user') ) {
+      if (!this.$cookies.get('user')) {
         this.$cookies.set('user', new Date().getTime())
       }
     },
