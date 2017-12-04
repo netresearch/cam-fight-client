@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import Router from 'vue-router'
-
 // Pages
 import Intro from '@/pages/Intro'
 import Team from '@/pages/Team'
@@ -15,38 +14,38 @@ Vue.use(Router)
 export default new Router({
   routes: [
     {
-      path: '/',
-      name: 'Intro',
+      path:      '/',
+      name:      'Intro',
       component: Intro
     },
     {
-      path: '/team',
-      name: 'Team',
+      path:      '/team',
+      name:      'Team',
       component: Team
     },
     {
-      path: '/challenge/list',
-      name: 'ChallengeList',
+      path:      '/challenge/list',
+      name:      'ChallengeList',
       component: ChallengeList
     },
     {
-      path: '/challenge/detail',
-      name: 'ChallengeDetail',
+      path:      '/challenge/detail',
+      name:      'ChallengeDetail',
       component: ChallengeDetail
     },
     {
-      path: '/voting/list',
-      name: 'VotingList',
+      path:      '/voting/list',
+      name:      'VotingList',
       component: VotingList
     },
     {
-      path: '/voting/detail',
-      name: 'VotingDetail',
+      path:      '/voting/detail',
+      name:      'VotingDetail',
       component: VotingDetail
     },
     {
-      path: '/help',
-      name: 'Help',
+      path:      '/help',
+      name:      'Help',
       component: Help
     }
   ]

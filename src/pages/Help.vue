@@ -8,13 +8,13 @@
 
 <script>
   export default {
-    created () {
+    created() {
       this.$http.get('http://cam-fight-server.herokuapp.com/api/help/show.php').then((response) => {
         console.log(response.data)
         this.help = response.data
       })
     },
-    data () {
+    data() {
       return {
         help: {}
       }
