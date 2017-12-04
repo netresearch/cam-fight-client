@@ -4,8 +4,10 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 import Vuetify from 'vuetify'
+import VueResource from 'vue-resource'
 
 Vue.use(Vuetify)
+Vue.use(VueResource)
 
 // index.js or main.js
 import('../node_modules/vuetify/dist/vuetify.min.css')

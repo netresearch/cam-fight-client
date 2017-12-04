@@ -51,17 +51,9 @@
               <router-link to="/team"> team selection </router-link>
               <router-link to="/challenge/list"> Challenge - List </router-link>
               <router-link to="/voting/list"> Voting - List </router-link>
+              <router-link to="/help"> Help </router-link>
             </nav>
             <router-view></router-view>
-            <img src="/static/v.png" alt="Vuetify.js" class="mb-5" />
-            <blockquote>
-              &#8220;First, solve the problem. Then, write the code.&#8221;
-              <footer>
-                <small>
-                  <em>&mdash;John Johnson</em>
-                </small>
-              </footer>
-            </blockquote>
           </v-layout>
         </v-slide-y-transition>
       </v-container>

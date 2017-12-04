@@ -8,6 +8,7 @@ import ChallengeList from '@/pages/Challenge/List'
 import ChallengeDetail from '@/pages/Challenge/Detail'
 import VotingList from '@/pages/Voting/List'
 import VotingDetail from '@/pages/Voting/Detail'
+import Help from '@/pages/Help'
 
 Vue.use(Router)
 
@@ -42,6 +43,11 @@ export default new Router({
       path: '/voting/detail',
       name: 'VotingDetail',
       component: VotingDetail
+    },
+    {
+      path: '/help',
+      name: 'Help',
+      component: Help
     }
   ]
 })
