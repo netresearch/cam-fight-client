@@ -1,9 +1,11 @@
 <template>
   <v-slide-x-transition>
     <v-app dark>
-      <img src="/static/img/team.png" alt="Team selection" width="100%">
+
       <v-container>
+
         <div class="text-xs-center">
+          <img src="/static/img/team_500.jpg" alt="Team selection">
           <h1>Choose your team</h1>
           <p>Your side a team. Experience adventure together and make the best photo!</p>
 

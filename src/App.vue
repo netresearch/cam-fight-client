@@ -10,7 +10,7 @@
   export default {
     data:    function () {
       return {
-        title: 'CamFight'
+        title:           'CamFight'
       }
     },
     methods: {

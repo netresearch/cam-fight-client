@@ -7,7 +7,14 @@ import Vuetify from 'vuetify'
 import VueResource from 'vue-resource'
 import VueCookies from 'vue-cookies'
 
-Vue.use(Vuetify)
+Vue.use(Vuetify, {
+  theme: {
+    primary:   '#976DD0',
+    secondary: '#b0bec5',
+    accent:    '#8c9eff',
+    error:     '#b71c1c'
+  }
+})
 Vue.use(VueCookies)
 Vue.use(VueResource)
 
@@ -17,9 +24,10 @@ import('../node_modules/vuetify/dist/vuetify.min.css')
 Vue.config.productionTip = false
 
 /* eslint-disable no-new */
-new Vue({
-  el:         '#app',
-  router,
-  template:   '<App/>',
-  components: { App }
-})
+new Vue(
+  {
+    el:         '#app',
+    router,
+    template:   '<App/>',
+    components: {App}
+  })

@@ -54,7 +54,6 @@
 <script>
   export default {
     created() {
-      console.info(this.$route.params)
       this.$http.get(
         'https://cam-fight-server.herokuapp.com/api/challenge/show.php',
         {

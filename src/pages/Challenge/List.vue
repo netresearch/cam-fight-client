@@ -9,17 +9,22 @@
             <v-spacer></v-spacer>
             <v-icon @click="goHelp">help</v-icon>
           </v-toolbar>
+          <status></status>
           <v-list two-line>
-            <template v-for="item in items">
+            <template v-for="(item, index) in items">
               <v-list-tile :key="item.title" @click="goDetail(item.id)">
+                <v-list-tile-avatar>
+                  <img :src="images.image"/>
+                </v-list-tile-avatar>
                 <v-list-tile-content>
                   <v-list-tile-title v-html="item.title"></v-list-tile-title>
                   <v-list-tile-sub-title v-html="item.description"></v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action>
-                  <v-icon :color="item.active ? 'teal' : 'grey'">chat_bubble</v-icon>
+                  <v-icon :color="item.active ? 'teal' : 'grey'">chevron_right</v-icon>
                 </v-list-tile-action>
               </v-list-tile>
+              <v-divider v-if="index + 1 < items.length"></v-divider>
             </template>
           </v-list>
         </v-card>
@@ -29,6 +34,8 @@
 </template>
 
 <script>
+  import status from '@/components/Status'
+
   export default {
     created() {
       this.$http.get('https://cam-fight-server.herokuapp.com/api/challenge/list.php').then((response) => {
@@ -37,10 +44,14 @@
     },
     data() {
       return {
-        items: {}
+        items:  {},
+        images: {
+          image: 'http://via.placeholder.com/100x100?text=?'
+        }
       }
     },
-    methods: {
+    components: {status},
+    methods:    {
       goDetail(id) {
         this.$router.push(
           {
@@ -52,8 +63,14 @@
         )
       },
       goHelp() {
-        this.$router.push({ name: 'Help' })
+        this.$router.push({name: 'Help'})
       }
     }
   }
 </script>
+
+<style>
+  .list {
+    padding-top: 0 !important;
+  }
+</style>
