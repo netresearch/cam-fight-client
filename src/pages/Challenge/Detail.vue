@@ -4,7 +4,7 @@
       <v-flex xs12 sm6 offset-sm3>
         <v-card>
 
-          <v-card-media :src="image">
+          <v-card-media :src="image" v-touch="{right: () => goBack()}">
             <v-layout column class="media" fill-height>
               <v-card-title>
                 <v-btn dark icon @click="goBack">
@@ -89,6 +89,11 @@
 </script>
 
 <style>
+
+  body,
+  .card {
+    height: 100% !important;
+  }
 
   .media {
     height: 100%;
