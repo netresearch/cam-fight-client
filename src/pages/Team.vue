@@ -1,17 +1,23 @@
 <template>
-  <v-container>
-    <div class="text-xs-center">
-      <h1>Team</h1>
-      <v-menu offset-y full-width close-on-click>
-        <v-btn color="primary" dark slot="activator">Select your team</v-btn>
-        <v-list>
-          <v-list-tile v-for="item in items" :key="item.title" @click="">
-            <v-list-tile-title @click="setTeam(item.value)">{{ item.title }}</v-list-tile-title>
-          </v-list-tile>
-        </v-list>
-      </v-menu>
-    </div>
-  </v-container>
+  <section>
+    <img src="/static/img/team.png" alt="Team selection" width="100%">
+    <v-container>
+      <div class="text-xs-center">
+        <h1>Choose your team</h1>
+        <p>Your side a team. Experience adventure together and make the best photo!</p>
+
+        <v-menu offset-y full-width close-on-click>
+          <v-btn color="deep-purple" dark slot="activator">Select your team</v-btn>
+          <v-list>
+            <v-list-tile v-for="item in items" :key="item.title" @click="">
+              <v-list-tile-title @click="setTeam(item.value)">{{ item.title }}</v-list-tile-title>
+            </v-list-tile>
+          </v-list>
+        </v-menu>
+
+      </div>
+    </v-container>
+  </section>
 </template>
 <script>
   export default {
