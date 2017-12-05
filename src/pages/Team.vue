@@ -26,12 +26,13 @@
         { title: 'Team purple', value: 'purple' },
         { title: 'Team cyan', value: 'cyan' },
         { title: 'Team black', value: 'black' },
+        { title: 'Team gray', value: 'gray' },
         { title: 'Team white', value: 'white' }
       ]
     }
     ),
     created() {
-      if (!this.$cookies.get('user')) {
+      if (this.$cookies.isKey('user')) {
         this.$cookies.set('user', new Date().getTime())
       }
     },
