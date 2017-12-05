@@ -1,21 +1,59 @@
 <template>
-  <v-app>
-    <v-toolbar fixed app :clipped-left="clipped">
-      <v-btn icon @click.stop="back()">
-        <v-icon>chevron_left</v-icon>
-      </v-btn>
-      <v-spacer></v-spacer>
-      <v-toolbar-title v-text="title"></v-toolbar-title>
-      <v-spacer></v-spacer>
-    </v-toolbar>
-    <v-content>
-      <v-container fluid>
-        <v-slide-y-transition mode="out-in">
-          <v-layout column align-center>
-            Hello List view
-          </v-layout>
-        </v-slide-y-transition>
-      </v-container>
-    </v-content>
-  </v-app>
+  <v-slide-x-transition>
+    <v-layout row>
+      <v-flex xs12 sm6 offset-sm3>
+        <v-card>
+          <v-toolbar>
+            <v-spacer></v-spacer>
+            <v-toolbar-title>Challenges</v-toolbar-title>
+            <v-spacer></v-spacer>
+            <v-icon @click="goHelp">help</v-icon>
+          </v-toolbar>
+          <v-list two-line>
+            <template v-for="item in items">
+              <v-list-tile :key="item.title" @click="goDetail(item.id)">
+                <v-list-tile-content>
+                  <v-list-tile-title v-html="item.title"></v-list-tile-title>
+                  <v-list-tile-sub-title v-html="item.description"></v-list-tile-sub-title>
+                </v-list-tile-content>
+                <v-list-tile-action>
+                  <v-icon :color="item.active ? 'teal' : 'grey'">chat_bubble</v-icon>
+                </v-list-tile-action>
+              </v-list-tile>
+            </template>
+          </v-list>
+        </v-card>
+      </v-flex>
+    </v-layout>
+  </v-slide-x-transition>
 </template>
+
+<script>
+  export default {
+    created() {
+      this.$http.get('https://cam-fight-server.herokuapp.com/api/challenge/list.php').then((response) => {
+        this.items = response.data.records
+      })
+    },
+    data() {
+      return {
+        items: {}
+      }
+    },
+    methods: {
+      goDetail(id) {
+        this.$router.push(
+          {
+            name:   'ChallengeDetail',
+            params: {
+              id
+            }
+          }
+        )
+      },
+      goHelp() {
+        this.$router.push({ name: 'Help' })
+      }
+    }
+  }
+</script>

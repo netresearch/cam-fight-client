@@ -29,7 +29,7 @@ export default new Router({
       component: ChallengeList
     },
     {
-      path:      '/challenge/detail',
+      path:      '/challenge/detail/:id',
       name:      'ChallengeDetail',
       component: ChallengeDetail
     },

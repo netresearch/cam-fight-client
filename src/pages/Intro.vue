@@ -15,7 +15,6 @@
       <v-icon>flight_takeoff</v-icon>
     </v-btn>
   </v-content>
-
 </template>
 
 <script>
