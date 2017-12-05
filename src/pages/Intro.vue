@@ -1,9 +1,8 @@
 <template>
-  <div>
-    <v-carousel class="carousel-full-height" hide-controls dark interval="60000">
+  <v-content>
+    <v-carousel class="deep-purple lighten-1 carousel-full-height" hide-controls dark interval="60000">
       <v-carousel-item v-for="(item,i) in items" v-bind:src="item.src" :key="i"></v-carousel-item>
     </v-carousel>
-
     <v-btn
       color="pink"
       dark
@@ -12,11 +11,10 @@
       right
       fab
       class="button-skip"
-      @click="skip"
-    >
+      @click="skip">
       <v-icon>flight_takeoff</v-icon>
     </v-btn>
-  </div>
+  </v-content>
 
 </template>
 
@@ -26,16 +24,13 @@
       return {
         items: [
           {
-            src: 'http://lorempixel.com/750/1334/people/9'
+            src: '/static/img/intro_01.svg'
           },
           {
-            src: 'http://lorempixel.com/750/1334/people/10'
+            src: '/static/img/intro_02.svg'
           },
           {
-            src: 'http://lorempixel.com/750/1334/people/3'
-          },
-          {
-            src: 'http://lorempixel.com/750/1334/people/4'
+            src: '/static/img/intro_03.svg'
           }
         ]
       }
@@ -52,6 +47,7 @@
   .carousel-full-height {
     position: absolute !important;
     height: 100% !important;
+    padding: 0 16pt  !important;
   }
   .carousel__controls {
     background: none !important;
@@ -59,4 +55,8 @@
   .button-skip {
     bottom: 55px !important;
   }
+  .carousel__item {
+    background-size: contain !important;
+  }
+
 </style>
