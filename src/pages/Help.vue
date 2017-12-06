@@ -2,7 +2,7 @@
   <v-fade-transition>
     <v-app dark>
       <v-card>
-        <v-toolbar>
+        <v-toolbar fixed app>
           <v-btn icon @click.stop="goBack">
             <v-icon>chevron_left</v-icon>
           </v-btn>

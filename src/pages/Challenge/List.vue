@@ -3,7 +3,7 @@
     <v-layout row>
       <v-flex xs12 sm6 offset-sm3>
         <v-card>
-          <v-toolbar>
+          <v-toolbar fixed app>
             <v-spacer></v-spacer>
             <v-toolbar-title>Challenges</v-toolbar-title>
             <v-spacer></v-spacer>

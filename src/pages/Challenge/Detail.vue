@@ -1,41 +1,44 @@
 <template>
   <v-slide-x-reverse-transition>
-    <v-card>
-      <v-card-media :src="image.path" v-touch="{right: () => goBack()}" :class="team">
-        <v-layout column class="media" fill-height>
-          <v-card-title>
-            <v-btn dark icon @click="goBack">
-              <v-icon>chevron_left</v-icon>
-            </v-btn>
-            <v-spacer></v-spacer>
-            <v-btn dark icon @click="goHelp">
-              <v-icon>help</v-icon>
-            </v-btn>
-          </v-card-title>
-          <div class="text-xs-center">
-            <form>
-              <upload-button id="image" icon="image" :selectedCallback="submitForm" class="upload"></upload-button>
-            </form>
-          </div>
-        </v-layout>
-      </v-card-media>
-      <v-container>
-        <v-card-title v-if="challenge.title" class="headline">
-          {{ challenge.title }}
-        </v-card-title>
-        <v-card-text v-if="challenge.desciption">
-          {{ challenge.desciption }}
-        </v-card-text>
-      </v-container>
-    </v-card>
+    <v-content>
+      <v-card>
+        <v-card-media :src="image.path" v-touch="{right: () => goBack()}" :class="team" style="min-height: 280px">
+          <v-layout column class="media">
+            <v-card-title>
+              <v-btn dark icon @click="goBack">
+                <v-icon>chevron_left</v-icon>
+              </v-btn>
+              <v-spacer></v-spacer>
+              <v-btn dark icon @click="goHelp">
+                <v-icon>help</v-icon>
+              </v-btn>
+            </v-card-title>
+            <div class="text-xs-center">
+              <form v-if="isImageLoaded">
+                <upload-button id="image" icon="image" :selectedCallback="submitForm" class="upload"></upload-button>
+              </form>
+              <v-progress-circular v-else indeterminate :size="50" class="mt-5" color="white"></v-progress-circular>
+            </div>
+          </v-layout>
+        </v-card-media>
+        <v-card-title v-if="challenge.title" class="headline pb-2">{{ challenge.title }}</v-card-title>
+        <v-card-text v-if="challenge.desciption" class="pt-0">{{ challenge.desciption }}</v-card-text>
+      </v-card>
+
+      <v-content>
+        <ChallengeGallery></ChallengeGallery>
+      </v-content>
+    </v-content>
   </v-slide-x-reverse-transition>
 </template>
 
 <script>
   import UploadButton from '@/components/UploadButton'
+  import ChallengeGallery from '@/components/ChallengeGallery'
 
   export default {
     components: {
+      ChallengeGallery,
       UploadButton
     },
     created() {
@@ -59,21 +62,25 @@
         }
       ).then((response) => {
         this.image = response.data
-        let cropper = 'https://ce86a502c.cloudimg.io/crop/800x600/x/'
+        let cropper = 'https://ce86a502c.cloudimg.io/crop/800x700/x/'
         this.image.path = cropper + this.image.path
-        console.log(this.image.path)
+        this.isImageLoaded = true
       })
     },
     data() {
       return {
-        challenge: {
+        challenge:          {
           id:          '',
           title:       '',
           subtitle:    '',
           description: '',
           bgColor:     ''
         },
-        image:     ''
+        image:              '',
+        isImageLoaded:      false,
+        isChallengeStarted: false,
+        isVotingStarted:    false
+
       }
     },
     computed:   {
@@ -105,11 +112,8 @@
                 console.log(response.body)
                 console.log('success')
               }, response => {
-                console.error('Error on uploading image')
+                alert('\t\t⚡⚡⚡\n☹  Image upload not work. So sad!  ☹\n\t\t⚡⚡⚡')
               })
-      },
-      fileSelectedFunc(e) {
-        console.log(e)
       },
       goHelp() {
         this.$router.push({ name: 'Help' })
@@ -123,10 +127,6 @@
 
 <style>
 
-  body,
-  .card {
-    height: 100% !important;
-  }
 
   .button-file {
     height: 300px !important;

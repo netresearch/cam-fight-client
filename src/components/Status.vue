@@ -1,7 +1,7 @@
 <template>
   <v-content>
-    <v-progress-linear :value="timerCompetition" height="30" color="primary"></v-progress-linear>
-    <v-progress-linear :value="timerVoting" height="30" color="error"></v-progress-linear>
+    <v-progress-linear :value="timerCompetition" height="20" color="primary"></v-progress-linear>
+    <v-progress-linear :value="timerVoting" height="20" color="error"></v-progress-linear>
   </v-content>
 </template>
 
