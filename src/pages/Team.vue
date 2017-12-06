@@ -1,18 +1,24 @@
 <template>
   <v-slide-x-transition>
-    <v-app dark>
+    <v-app dark class="deep-purple">
+
+      <v-content>
+        <div class="text-xs-center">
+          <img src="/static/img/team_500.jpg" alt="Team selection" class="image text-xs-center">
+        </div>
+      </v-content>
 
       <v-container>
 
-        <div class="text-xs-center">
-          <img src="/static/img/team_500.jpg" alt="Team selection">
-          <h1>Choose your team</h1>
-          <p>Your side a team. Experience adventure together and make the best photo!</p>
+        <div class="text-xs-center deep-purple">
 
-          <v-menu offset-y full-width close-on-click>
-            <v-btn color="deep-purple" dark slot="activator">Select your team</v-btn>
+          <h1>Choose your team</h1>
+          <p>Your side a team! Experience adventure together and make the best photo!</p>
+
+          <v-menu offset-y full-width close-on-click dark>
+            <v-btn class="white" light slot="activator">Choose</v-btn>
             <v-list>
-              <v-list-tile v-for="item in items" :key="item.title" @click="">
+              <v-list-tile v-for="item in items" :key="item.title" @click="" dark>
                 <v-list-tile-title @click="setTeam(item.value)">{{ item.title }}</v-list-tile-title>
               </v-list-tile>
             </v-list>
@@ -22,6 +28,7 @@
     </v-app>
   </v-slide-x-transition>
 </template>
+
 <script>
   export default {
     data:    () => ({
@@ -53,3 +60,10 @@
     }
   }
 </script>
+
+
+<style>
+  .image {
+    max-width: 100%;
+  }
+</style>

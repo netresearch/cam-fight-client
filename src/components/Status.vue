@@ -7,32 +7,31 @@
 
 <script>
   export default {
-    name: 'Status',
+    name:    'Status',
     data() {
       return {
         competition:      {},
         timerCompetition: 100,
-        timerVoting:      0
+        timerVoting:      100
       }
     },
     created() {
-      this.$http.get('https://cam-fight-server.herokuapp.com/api/challenge/list.php').then((response) => {
-        this.items = response.data.records
-      })
-
       this.$http.get(
         'https://cam-fight-server.herokuapp.com/api/competition/show.php',
         {
           params:
-            {id: 1}
+            { id: 1 }
         }
       ).then((response) => {
         this.competition = response.data
         this.timerCompetition = this.calcTimeLeftInPercent(
-          parseInt(this.competition.startChallenges),
-          parseInt(this.competition.stopChallenges)
+          this.competition.startChallenges,
+          this.competition.stopChallenges
         )
-        console.log(this.timerCompetition)
+        this.timerVoting = this.calcTimeLeftInPercent(
+          this.competition.startVotes,
+          this.competition.stopVotes
+        )
       })
     },
     methods: {
@@ -40,7 +39,7 @@
         let length = end - start
         let now = Math.round(Date.now() / 1000)
         let rest = end - now
-        let percent = Math.round(rest / length * 100) * -1
+        let percent = 100 - Math.round(rest / length * 100)
         return percent
       }
     }

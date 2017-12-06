@@ -14,7 +14,7 @@
             <template v-for="(item, index) in items">
               <v-list-tile :key="item.title" @click="goDetail(item.id)">
                 <v-list-tile-avatar>
-                  <img :src="images.image"/>
+                  <ChallengeImage :src="images.image" width="200" height="200" challengeId="1"></ChallengeImage>
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                   <v-list-tile-title v-html="item.title"></v-list-tile-title>
@@ -35,11 +35,12 @@
 
 <script>
   import status from '@/components/Status'
+  import ChallengeImage from '@/components/ChallengeImage'
 
   export default {
     created() {
       this.$http.get('https://cam-fight-server.herokuapp.com/api/challenge/list.php').then((response) => {
-        this.items = response.data.records
+        this.items = response.data
       })
     },
     data() {
@@ -50,7 +51,10 @@
         }
       }
     },
-    components: {status},
+    components: {
+      status,
+      ChallengeImage
+    },
     methods:    {
       goDetail(id) {
         this.$router.push(
@@ -63,7 +67,7 @@
         )
       },
       goHelp() {
-        this.$router.push({name: 'Help'})
+        this.$router.push({ name: 'Help' })
       }
     }
   }

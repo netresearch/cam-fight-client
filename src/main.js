@@ -6,6 +6,7 @@ import router from './router'
 import Vuetify from 'vuetify'
 import VueResource from 'vue-resource'
 import VueCookies from 'vue-cookies'
+import VueUpload from '@websanova/vue-upload'
 
 Vue.use(Vuetify, {
   theme: {
@@ -15,8 +16,10 @@ Vue.use(Vuetify, {
     error:     '#b71c1c'
   }
 })
+
 Vue.use(VueCookies)
 Vue.use(VueResource)
+Vue.use(VueUpload)
 
 // index.js or main.js
 import('../node_modules/vuetify/dist/vuetify.min.css')
