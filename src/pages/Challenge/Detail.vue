@@ -15,7 +15,7 @@
             </v-card-title>
             <div class="text-xs-center">
               <form v-if="isImageLoaded">
-                <upload-button id="image" icon="image" :selectedCallback="submitForm" class="upload"></upload-button>
+                <upload-button id="image" icon="camera_alt" :selectedCallback="submitForm" class="upload"></upload-button>
               </form>
               <v-progress-circular v-else indeterminate :size="50" class="mt-5" color="white"></v-progress-circular>
             </div>

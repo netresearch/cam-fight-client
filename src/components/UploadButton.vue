@@ -1,7 +1,7 @@
 <template>
   <v-btn flat color="white" class="button-file">
     <span v-if="title">{{ title }}</span>
-    <v-icon large dark>{{ icon }}</v-icon>
+    <v-icon x-large dark>{{ icon }}</v-icon>
     <input :id="id" :name="id" type="file" accept="image/*" @change="fileSelected">
   </v-btn>
 </template>
