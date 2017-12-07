@@ -16,7 +16,7 @@
         type: String
       },
       challengeId: {
-        type:     String,
+        type:     Number,
         required: true
       },
       operation:   {
@@ -34,18 +34,19 @@
     },
     created() {
       this.$http.get(
-        'https://cam-fight-server.herokuapp.com/api/image/show.php',
+        'https://cam-fight-server.herokuapp.com/api/image/list.php',
         {
           params: {
-            id:          1,
             teamId:      this.teamId || this.$cookies.get('team'),
             challengeId: this.challengeId
           }
         }
-      ).then((response) => {
-        this.image = response.data
+      ).then(response => {
+        this.image = response.data[0]
         let cropper = 'https://ce86a502c.cloudimg.io/' + this.operation + '/' + this.width + 'x' + this.height + '/x/'
         this.image.path = cropper + this.image.path
+      }, response => {
+        console.info('No image for competition uploaded yet .')
       })
     }
   }

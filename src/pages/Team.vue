@@ -42,8 +42,9 @@
         { title: 'Team purple', value: 'purple' },
         { title: 'Team cyan', value: 'cyan' },
         { title: 'Team black', value: 'black' },
+        { title: 'Team indigo', value: 'indigo' },
         { title: 'Team gray', value: 'gray' },
-        { title: 'Team white', value: 'white' }
+        { title: 'Team teal', value: 'teal' }
       ]
     }
     ),

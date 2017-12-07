@@ -14,20 +14,26 @@
               </v-btn>
             </v-card-title>
             <div class="text-xs-center">
-              <form v-if="isImageLoaded">
-                <upload-button id="image" icon="camera_alt" :selectedCallback="submitForm" class="upload"></upload-button>
+              <form v-if="isImageDataLoaded">
+                <upload-button id="image"
+                               icon="camera_alt"
+                               :teamId="team"
+                               :uploadCallback="loadImage"
+                               class="upload"></upload-button>
               </form>
               <v-progress-circular v-else indeterminate :size="50" class="mt-5" color="white"></v-progress-circular>
             </div>
           </v-layout>
         </v-card-media>
         <v-card-title v-if="challenge.title" class="headline pb-2">{{ challenge.title }}</v-card-title>
-        <v-card-text v-if="challenge.desciption" class="pt-0">{{ challenge.desciption }}</v-card-text>
+        <v-card-text v-if="challenge.description" class="pt-0">{{ challenge.description }}</v-card-text>
+        <v-card-text>
+          <v-alert outline :color="team" icon="info" :value="true">
+            Your team is {{ team }}
+          </v-alert>
+        </v-card-text>
       </v-card>
-
-      <v-content>
-        <ChallengeGallery></ChallengeGallery>
-      </v-content>
+      <ChallengeGallery v-if="isVotingStarted"></ChallengeGallery>
     </v-content>
   </v-slide-x-reverse-transition>
 </template>
@@ -42,30 +48,8 @@
       UploadButton
     },
     created() {
-      // Challenge
-      this.$http.get(
-        'https://cam-fight-server.herokuapp.com/api/challenge/show.php',
-        {
-          params:
-            { id: this.$route.params.id }
-        }
-      ).then((response) => {
-        this.challenge = response.data
-      })
-
-      // Image
-      this.$http.get(
-        'https://cam-fight-server.herokuapp.com/api/image/show.php',
-        {
-          params:
-            { id: 1 }
-        }
-      ).then((response) => {
-        this.image = response.data
-        let cropper = 'https://ce86a502c.cloudimg.io/crop/800x700/x/'
-        this.image.path = cropper + this.image.path
-        this.isImageLoaded = true
-      })
+      this.loadChallenge()
+      this.loadImage()
     },
     data() {
       return {
@@ -77,7 +61,7 @@
           bgColor:     ''
         },
         image:              '',
-        isImageLoaded:      false,
+        isImageDataLoaded:      false,
         isChallengeStarted: false,
         isVotingStarted:    false
 
@@ -86,34 +70,51 @@
     computed:   {
       team() {
         return this.$cookies.get('team')
+      },
+      challengeId() {
+        return this.$route.params.id
       }
     },
     methods:    {
-      submitForm: function(file) {
-        let formData = {
-          teamId:      this.team,
-          challengeId: this.challenge.id,
-          image:       file
-        }
-
-        this.$http.post('https://cam-fight-server.herokuapp.com/api/image/add.php', formData)
-            .then(
-              response => {
-                // get status
-                console.log(response.status)
-
-                // get status text
-                console.log(response.statusText)
-
-                // get 'Expires' header
-                console.log(response.headers.get('Expires'))
-
-                // get body data
-                console.log(response.body)
-                console.log('success')
-              }, response => {
-                alert('\t\t⚡⚡⚡\n☹  Image upload not work. So sad!  ☹\n\t\t⚡⚡⚡')
-              })
+      loadChallenge() {
+        this.$http.get(
+          'https://cam-fight-server.herokuapp.com/api/challenge/show.php',
+          {
+            params:
+              { id: this.challengeId }
+          }
+        ).then(
+          response => {
+            this.challenge = response.data
+          },
+          response => {
+            console.error('No competition found. So sad!')
+          })
+      },
+      loadImage() {
+        this.$http.get(
+          'https://cam-fight-server.herokuapp.com/api/image/list.php',
+          {
+            params: {
+              challengeId: this.challengeId,
+              teamId:      this.team
+            }
+          }
+        ).then(
+          response => {
+            this.image = response.data[0]
+            let cropper = 'https://ce86a502c.cloudimg.io/crop/800x700/x/'
+            this.image.path = cropper + this.image.path
+            this.isImageDataLoaded = true
+          },
+          response => {
+            if (response.status === 503) {
+              console.info('No image uploaded yet.')
+              this.isImageDataLoaded = true
+            } else {
+              alert('\n☹  Image service not work. So sad!  ☹\n')
+            }
+          })
       },
       goHelp() {
         this.$router.push({ name: 'Help' })
@@ -126,8 +127,6 @@
 </script>
 
 <style>
-
-
   .button-file {
     height: 300px !important;
     width: 95%;

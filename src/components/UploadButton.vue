@@ -1,29 +1,67 @@
 <template>
-  <v-btn flat color="white" class="button-file">
-    <span v-if="title">{{ title }}</span>
-    <v-icon x-large dark>{{ icon }}</v-icon>
-    <input :id="id" :name="id" type="file" accept="image/*" @change="fileSelected">
-  </v-btn>
+  <form method="POST" enctype="multipart/form-data">
+    <v-btn flat color="white" class="button-file">
+      <span v-if="title">{{ title }}</span>
+      <v-icon x-large dark color="green" v-if="isUploaded">check_circle</v-icon>
+      <v-icon x-large dark color="red" v-else-if="isError">error</v-icon>
+      <v-icon x-large dark v-else>{{ icon }}</v-icon>
+      <input :id="id" :name="id" type="file" accept="image/*" @change="upload">
+    </v-btn>
+  </form>
 </template>
 
 <script>
   export default {
     name:    'upload-button',
     props:   {
-      selectedCallback: Function,
-      title:            String,
-      id:               String,
-      icon:             String
+      uploadCallback: Function,
+      id:             String,
+      title:          String,
+      teamId:         String,
+      icon:           String
+    },
+    data() {
+      return {
+        isUploaded: false,
+        isError:    false
+      }
     },
     methods: {
-      fileSelected(e) {
-        if (this.selectedCallback) {
-          if (e.target.files[0]) {
-            this.selectedCallback(e.target.files[0])
-          } else {
-            this.selectedCallback(null)
-          }
+      upload: function(e) {
+        let file
+
+        if (e.target.files[0]) {
+          file = e.target.files[0]
+        } else {
+          return
         }
+
+        alert(this.$route.params.id)
+
+        let formData = new FormData()
+        formData.append('teamId', this.teamId)
+        formData.append('challengeId', this.$route.params.id)
+        formData.append('image', file)
+
+        this.$http.post(
+          'https://cam-fight-server.herokuapp.com/api/image/add.php',
+          formData,
+          {
+            emulateJSON: true,
+            headers:     {
+              'Content-Type': 'multipart/form-data'
+            }
+          }).then(
+          response => {
+            console.info('success')
+            this.isError = false
+            this.isUploaded = true
+            this.uploadCallback()
+          },
+          response => {
+            this.isError = true
+            console.log('☹  Image upload not work. So sad!  ☹')
+          })
       }
     }
   }

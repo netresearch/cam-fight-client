@@ -9,12 +9,12 @@
             <v-spacer></v-spacer>
             <v-icon @click="goHelp">help</v-icon>
           </v-toolbar>
-          <status></status>
+          <CompetitionStatus></CompetitionStatus>
           <v-list two-line>
             <template v-for="(item, index) in items">
               <v-list-tile :key="item.title" @click="goDetail(item.id)">
                 <v-list-tile-avatar>
-                  <ChallengeImage :src="images.image" width="200" height="200" challengeId="1"></ChallengeImage>
+                  <ChallengeImage :src="images.image" width="200" height="200" :challengeId="item.id"></ChallengeImage>
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                   <v-list-tile-title v-html="item.title"></v-list-tile-title>
@@ -34,8 +34,8 @@
 </template>
 
 <script>
-  import status from '@/components/Status'
   import ChallengeImage from '@/components/ChallengeImage'
+  import CompetitionStatus from '@/components/CompetitionStatus'
 
   export default {
     created() {
@@ -52,7 +52,7 @@
       }
     },
     components: {
-      status,
+      CompetitionStatus,
       ChallengeImage
     },
     methods:    {

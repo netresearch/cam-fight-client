@@ -7,7 +7,7 @@
 
 <script>
   export default {
-    name:    'Status',
+    name:    'CompetitionStatus',
     data() {
       return {
         competition:      {},
@@ -36,8 +36,13 @@
     },
     methods: {
       calcTimeLeftInPercent(start, end) {
-        let length = end - start
         let now = Math.round(Date.now() / 1000)
+        if (now < start) {
+          return 0
+        } else if (now > end) {
+          return 100
+        }
+        let length = end - start
         let rest = end - now
         let percent = 100 - Math.round(rest / length * 100)
         return percent
