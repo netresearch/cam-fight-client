@@ -47,7 +47,10 @@
   import ChallengeGallery from '@/components/ChallengeGallery'
 
   export default {
-    props:      ['isCompetitionRunning', 'isVotingRunning'],
+    props: [
+      'isCompetitionRunning',
+      'isVotingRunning'
+    ],
     components: {
       ChallengeGallery,
       UploadButton
@@ -106,18 +109,18 @@
           }
         ).then(
           response => {
-            this.image = response.data[0]
-            let cropper = 'https://ce86a502c.cloudimg.io/crop/800x700/x/'
-            this.image.path = cropper + this.image.path
-            this.isImageDataLoaded = true
-          },
-          response => {
             this.isImageDataLoaded = true
             if (response.status === 204) {
               console.info('No image uploaded yet.')
             } else {
-              alert('\n☹  Image service not work. So sad!  ☹\n')
+              this.image = response.data[0]
+              let cropper = 'https://ce86a502c.cloudimg.io/crop/800x700/x/'
+              this.image.path = cropper + this.image.path
             }
+          },
+          response => {
+            this.isImageDataLoaded = true
+            alert('\n☹  Image service not work. So sad!  ☹\n')
           })
       },
       goHelp() {
