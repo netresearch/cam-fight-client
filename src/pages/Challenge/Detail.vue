@@ -112,9 +112,9 @@
             this.isImageDataLoaded = true
           },
           response => {
+            this.isImageDataLoaded = true
             if (response.status === 204) {
               console.info('No image uploaded yet.')
-              this.isImageDataLoaded = true
             } else {
               alert('\n☹  Image service not work. So sad!  ☹\n')
             }
