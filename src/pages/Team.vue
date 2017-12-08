@@ -1,7 +1,7 @@
 <template>
   <v-slide-x-transition>
     <v-app dark class="deep-purple">
-
+      <ChallengeStatusChecker></ChallengeStatusChecker>
       <v-content>
         <div class="text-xs-center">
           <img src="/static/img/team_500.jpg" alt="Team selection" class="image text-xs-center">
@@ -30,7 +30,12 @@
 </template>
 
 <script>
+  import ChallengeStatusChecker from '@/components/ChallengeStatusChecker'
+
   export default {
+    components: {
+      ChallengeStatusChecker
+    },
     data:    () => ({
       items: [
         { title: 'Team blue', value: 'blue' },
