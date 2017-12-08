@@ -24,9 +24,6 @@
     },
 
     created() {
-      if (!this.$cookies.isKey('team')) {
-        this.$router.push({ name: 'Team' })
-      }
       this.getCompetition()
     },
 
