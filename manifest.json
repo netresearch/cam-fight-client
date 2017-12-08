@@ -1,6 +1,7 @@
 {
-  "name": "cam-fight",
+  "name": "cam-fight - ",
   "short_name": "cam-fight",
+  "description": "The photo rally app for your friends and colleagues.",
   "icons": [
     {
       "src": "/static/icons/apple-touch-icon-180x180.png",
@@ -13,8 +14,12 @@
       "type": "image/png"
     }
   ],
-  "start_url": "/index.html",
+  "start_url": "/",
   "display": "standalone",
+  "orientation":"portrait",
   "background_color": "#000000",
-  "theme_color": "#976DD0"
+  "theme_color": "#976DD0",
+  "related_applications": [{
+    "platform": "web"
+  }]
 }

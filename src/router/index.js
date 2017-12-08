@@ -7,6 +7,7 @@ import ChallengeList from '@/pages/Challenge/List'
 import ChallengeDetail from '@/pages/Challenge/Detail'
 import Waiting from '@/pages/Waiting'
 import Help from '@/pages/Help'
+import Reset from '@/pages/Reset'
 
 Vue.use(Router)
 
@@ -36,6 +37,11 @@ export default new Router({
       path:      '/challenge/waiting',
       name:      'Waiting',
       component: Waiting
+    },
+    {
+      path:      '/reset',
+      name:      'Reset',
+      component: Reset
     },
     {
       path:      '/help',
