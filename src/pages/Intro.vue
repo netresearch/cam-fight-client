@@ -1,6 +1,5 @@
 <template>
   <v-content>
-    <ChallengeStatusChecker></ChallengeStatusChecker>
     <v-carousel class="deep-purple lighten-1 carousel-full-height" hide-controls dark interval="60000">
       <v-carousel-item v-for="(item,i) in items" v-bind:src="item.src" :key="i"></v-carousel-item>
     </v-carousel>
@@ -19,12 +18,7 @@
 </template>
 
 <script>
-  import ChallengeStatusChecker from '@/components/ChallengeStatusChecker'
-
   export default {
-    components: {
-      ChallengeStatusChecker
-    },
     data() {
       return {
         items: [
@@ -63,5 +57,4 @@
   .carousel__item {
     background-size: contain !important;
   }
-
 </style>
