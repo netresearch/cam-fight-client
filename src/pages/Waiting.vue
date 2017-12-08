@@ -36,11 +36,9 @@
     mounted() {
       let now = Math.round(Date.now() / 1000)
       this.interval = setInterval(() => {
-        console.log(this.value)
         this.value = this.calcTimeLeftInPercent(now, this.competition.startChallenges)
-        if (this.value === 100) {
-          return (this.value = 0
-          )
+        if (this.value >= 100) {
+          this.$router.push({ name: 'ChallengeList' })
         }
       }, 3000)
     },

@@ -52,10 +52,6 @@
           ) {
             this.$router.push({ name: 'Waiting' })
           }
-
-          if (this.isCompetitionRunning && this.$route.path === '/challenge/waiting') {
-            this.$router.push({ name: 'ChallengeList' })
-          }
         }, 3000)
       },
 
