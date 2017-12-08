@@ -1,6 +1,6 @@
 <template>
   <v-slide-x-transition>
-    <v-layout row>
+    <v-layout row v-if="isCompetitionRunning || isVotingRunning">
       <v-flex xs12 sm6 offset-sm3>
         <v-card>
           <v-toolbar fixed app>
@@ -38,6 +38,10 @@
   import CompetitionStatus from '@/components/CompetitionStatus'
 
   export default {
+    props: [
+      'isCompetitionRunning',
+      'isVotingRunning'
+    ],
     created() {
       this.$http.get('https://cam-fight-server.herokuapp.com/api/challenge/list.php').then((response) => {
         this.items = response.data
