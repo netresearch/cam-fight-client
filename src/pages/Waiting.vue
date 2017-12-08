@@ -50,6 +50,7 @@
         let length = end - start
         let rest = end - now
         let percent = 100 - Math.round(rest / length * 100)
+        percent = (percent > 100) ? 100 : percent
         return percent
       }
     }
