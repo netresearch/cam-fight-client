@@ -36,12 +36,13 @@
           return
         }
 
-        alert(this.$route.params.id)
-
         let formData = new FormData()
         formData.append('teamId', this.teamId)
         formData.append('challengeId', this.$route.params.id)
         formData.append('image', file)
+
+        this.isUploaded = false
+        this.isError = false
 
         this.$http.post(
           'https://cam-fight-server.herokuapp.com/api/image/add.php',
