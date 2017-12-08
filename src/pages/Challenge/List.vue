@@ -18,7 +18,7 @@
                 </v-list-tile-avatar>
                 <v-list-tile-content>
                   <v-list-tile-title v-html="item.title"></v-list-tile-title>
-                  <v-list-tile-sub-title v-text="item.description | stripTags"></v-list-tile-sub-title>
+                  <v-list-tile-sub-title>{{item.description | text}}</v-list-tile-sub-title>
                 </v-list-tile-content>
                 <v-list-tile-action>
                   <v-icon :color="item.active ? 'teal' : 'grey'">chevron_right</v-icon>
@@ -52,10 +52,9 @@
       }
     },
     filters:    {
-      stripTags(html) {
-        var tmp = document.createElement('DIV')
-        tmp.innerHTML = html
-        return tmp.textContent || tmp.innerText || ''
+      text(html) {
+        let regex = /(<([^>]+)>)/ig
+        return html.replace(regex, '')
       }
     },
     components: {
