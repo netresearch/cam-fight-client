@@ -1,6 +1,7 @@
 <template>
   <v-slide-x-reverse-transition>
     <v-content>
+
       <v-card>
         <v-card-media :src="image.path" v-touch="{right: () => goBack()}" :class="team" style="min-height: 280px">
           <v-layout column class="media">
@@ -13,7 +14,7 @@
                 <v-icon>help</v-icon>
               </v-btn>
             </v-card-title>
-            <div class="text-xs-center">
+            <div class="text-xs-center" v-if="isCompetitionRunning">
               <form v-if="isImageDataLoaded">
                 <upload-button id="image"
                                icon="camera_alt"
@@ -26,14 +27,17 @@
           </v-layout>
         </v-card-media>
         <v-card-title v-if="challenge.title" class="headline pb-2">{{ challenge.title }}</v-card-title>
-        <v-card-text v-if="challenge.description" class="pt-0">{{ challenge.description }}</v-card-text>
+        <v-card-text v-if="challenge.description" class="pt-0" v-html="challenge.description"></v-card-text>
         <v-card-text>
-          <v-alert outline :color="team" icon="info" :value="true">
+          <v-alert outline :color="team" icon="info" :value="true" v-if="isCompetitionRunning">
             Your team is {{ team }}
+          </v-alert>
+          <v-alert outline color="primary" icon="info" :value="true" v-if="isVotingRunning">
+            <strong>Voting time!</strong><br>You can't vote for your own team.
           </v-alert>
         </v-card-text>
       </v-card>
-      <ChallengeGallery v-if="isVotingStarted"></ChallengeGallery>
+      <ChallengeGallery v-if="isVotingRunning"></ChallengeGallery>
     </v-content>
   </v-slide-x-reverse-transition>
 </template>
@@ -43,6 +47,7 @@
   import ChallengeGallery from '@/components/ChallengeGallery'
 
   export default {
+    props:      ['isCompetitionRunning', 'isVotingRunning'],
     components: {
       ChallengeGallery,
       UploadButton
@@ -61,10 +66,9 @@
           bgColor:     ''
         },
         image:              '',
-        isImageDataLoaded:      false,
+        isImageDataLoaded:  false,
         isChallengeStarted: false,
         isVotingStarted:    false
-
       }
     },
     computed:   {
@@ -108,7 +112,7 @@
             this.isImageDataLoaded = true
           },
           response => {
-            if (response.status === 503) {
+            if (response.status === 204) {
               console.info('No image uploaded yet.')
               this.isImageDataLoaded = true
             } else {

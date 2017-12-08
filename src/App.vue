@@ -1,9 +1,7 @@
 <template>
   <v-app>
-    <router-view></router-view>
+    <router-view :isCompetitionRunning="isCompetitionRunning" :isVotingRunning="isVotingRunning"></router-view>
     <Portrait></Portrait>
-    <div v-if="isCompetitionRunning"></div>
-    <div v-if="isVotingRunning"></div>
   </v-app>
 </template>
 
@@ -17,6 +15,7 @@
 
     data:     function() {
       return {
+        interval:             {},
         title:                'CamFight',
         isCompetitionRunning: false,
         isVotingRunning:      false,
@@ -31,9 +30,13 @@
       this.getCompetition()
     },
 
+    beforeDestroy() {
+      clearInterval(this.interval)
+    },
+
     methods:  {
       watchStatus() {
-        setInterval(() => {
+        this.interval = setInterval(() => {
           this.isCompetitionRunning = this.isRunning(
             this.competition.startChallenges,
             this.competition.stopChallenges
@@ -42,16 +45,28 @@
             this.competition.startVotes,
             this.competition.stopVotes
           )
-        }, 20000)
+
+          // Challenge
+          if (!this.isCompetitionRunning &&
+              (
+                this.$route.path === '/challenge/list' ||
+                this.$route.path === '/challenge/detail'
+              )
+          ) {
+            this.$router.push({ name: 'Waiting' })
+          }
+        }, 2000)
       },
+
       isRunning(start, end) {
         let now = Math.round(Date.now() / 1000)
-        console.log(now, start, end)
-        if (now < start && now > end) {
+
+        if (now < start || now > end) {
           return false
         }
         return true
       },
+
       getCompetition() {
         this.$http.get(
           'https://cam-fight-server.herokuapp.com/api/competition/show.php',
@@ -67,6 +82,7 @@
             alert('\n☹  Vote not work. So sad!  ☹\n')
           })
       },
+
       back() {
         this.$router.go(-1)
       }

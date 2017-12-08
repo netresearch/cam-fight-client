@@ -52,7 +52,7 @@
     }
     ),
     created() {
-      if (this.$cookies.isKey('user')) {
+      if (!this.$cookies.isKey('user')) {
         this.$cookies.set('user', new Date().getTime())
       }
     },

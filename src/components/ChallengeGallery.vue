@@ -41,25 +41,36 @@
         myVote: null
       }
     },
+    created() {
+      this.loadGallery()
+    },
     methods: {
       vote(imageId) {
         this.myVote = imageId
         this.loadGallery()
-        this.$http.get(
-          'https://cam-fight-server.herokuapp.com/api/vote/add.php',
+
+        let data = {
+          'challengeId': this.$route.params.id,
+          'imageId':     imageId,
+          'userId':      this.$cookies.get('user')
+        }
+
+        console.log(data)
+        this.$http.post(
+          'https://cam-fight-server.herokuapp.com/api/image/upvote.php',
+          data,
           {
-            params: {
-              competitionId: 1,
-              challengeId:   1,
-              imageId:       imageId,
-              teamId:        this.$cookies.get('team')
+            emulateJSON: true,
+            headers:     {
+              'Content-Type': 'multipart/form-data'
             }
-          }
-        ).then(
+          }).then(
           response => {
-            this.challenge = response.data
+            console.log('success')
+            this.loadGallery()
           },
           response => {
+            console.log(response)
             alert('\n☹  Vote not work. So sad!  ☹\n')
           })
       },
@@ -69,17 +80,14 @@
           {
             params: {
               competitionId:     1,
-              challengeId:       1,
-              teamexcludeTeamId: this.$cookies.get('team')
+              challengeId:       this.$route.params.id,
+              excludeTeamId:     this.$cookies.get('team')
             }
           }
         ).then((response) => {
           this.images = response.data
         })
       }
-    },
-    created() {
-      this.loadGallery()
     }
   }
 </script>

@@ -10,8 +10,7 @@
         </v-toolbar>
         <v-container>
           <v-content>
-            <h1>Challenges</h1>
-            <p>{{ help }}</p>
+            <div v-html="help"></div>
           </v-content>
         </v-container>
       </v-card>
