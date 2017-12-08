@@ -1,6 +1,6 @@
 <template>
   <v-app>
-    <router-view :isCompetitionRunning="isCompetitionRunning" :isVotingRunning="isVotingRunning"></router-view>
+    <router-view :isCompetitionRunning="isCompetitionRunning" :isVotingRunning="isVotingRunning" :competition="competition"></router-view>
     <Portrait></Portrait>
   </v-app>
 </template>
@@ -55,7 +55,11 @@
           ) {
             this.$router.push({ name: 'Waiting' })
           }
-        }, 2000)
+
+          if (this.isCompetitionRunning && this.$route.path === '/challenge/waiting') {
+            this.$router.push({ name: 'ChallengeList' })
+          }
+        }, 3000)
       },
 
       isRunning(start, end) {

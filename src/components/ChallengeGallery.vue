@@ -10,9 +10,8 @@
           >
             <v-card class="pb-5">
               <v-card-media
-                :src="image.path"
+                :src="image.path | cdn"
                 height="200px">
-
               </v-card-media>
 
               <v-bottom-nav absolute :value="true" :active.sync="myVote" color="white">
@@ -44,6 +43,12 @@
     created() {
       this.loadGallery()
     },
+    filters: {
+      cdn: function (path) {
+        let cropper = 'https://ce86a502c.cloudimg.io/crop/300x400/x/'
+        return cropper + path
+      }
+    },
     methods: {
       vote(imageId) {
         this.myVote = imageId
@@ -55,7 +60,6 @@
           'userId':      this.$cookies.get('user')
         }
 
-        console.log(data)
         this.$http.post(
           'https://cam-fight-server.herokuapp.com/api/image/upvote.php',
           data,
@@ -70,7 +74,6 @@
             this.loadGallery()
           },
           response => {
-            console.log(response)
             alert('\n☹  Vote not work. So sad!  ☹\n')
           })
       },
