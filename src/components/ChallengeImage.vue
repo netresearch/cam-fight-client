@@ -42,11 +42,15 @@
           }
         }
       ).then(response => {
-        this.image = response.data[0]
-        let cropper = 'https://ce86a502c.cloudimg.io/' + this.operation + '/' + this.width + 'x' + this.height + '/x/'
-        this.image.path = cropper + this.image.path
+        if (response.status === 204) {
+          console.info('No image uploaded yet.')
+        } else {
+          this.image = response.data[0]
+          let cropper = 'https://ce86a502c.cloudimg.io/' + this.operation + '/' + this.width + 'x' + this.height + '/x/'
+          this.image.path = cropper + this.image.path
+        }
       }, response => {
-        console.info('No image for competition uploaded yet .')
+        console.error('Something wrong')
       })
     }
   }
