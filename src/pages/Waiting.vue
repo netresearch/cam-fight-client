@@ -19,11 +19,7 @@
 
 <script>
   export default {
-    props: {
-      competition: {
-        type: Object
-      }
-    },
+    props: ['competition', 'isCompetitionRunning', 'isVotingRunning'],
     data() {
       return {
         interval: {},
@@ -33,13 +29,22 @@
     beforeDestroy() {
       clearInterval(this.interval)
     },
+    watch: {
+      isCompetitionRunning(status) {
+        if (status) {
+          this.$router.push({ name: 'ChallengeList' })
+        }
+      },
+      isVotingRunning(status) {
+        if (status) {
+          this.$router.push({ name: 'ChallengeList' })
+        }
+      }
+    },
     mounted() {
       let now = Math.round(Date.now() / 1000)
       this.interval = setInterval(() => {
         this.value = this.calcTimeLeftInPercent(now, this.competition.startChallenges)
-        if (this.value >= 100) {
-          this.$router.push({ name: 'ChallengeList' })
-        }
       }, 3000)
     },
     methods: {
