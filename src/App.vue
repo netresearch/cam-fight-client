@@ -2,8 +2,8 @@
   <v-app>
     <router-view></router-view>
     <Portrait></Portrait>
-    <div v-if="isCompetitionRunning">Competrion</div>
-    <div v-if="isVotingRunning">VVOOOOTE</div>
+    <div v-if="isCompetitionRunning"></div>
+    <div v-if="isVotingRunning"></div>
   </v-app>
 </template>
 

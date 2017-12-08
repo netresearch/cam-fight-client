@@ -4,8 +4,9 @@
       <span v-if="title">{{ title }}</span>
       <v-icon x-large dark color="green" v-if="isUploaded">check_circle</v-icon>
       <v-icon x-large dark color="red" v-else-if="isError">error</v-icon>
+      <v-progress-circular v-else indeterminate :size="40" color="white" v-else-if="isLoading"></v-progress-circular>
       <v-icon x-large dark v-else>{{ icon }}</v-icon>
-      <input :id="id" :name="id" type="file" accept="image/*" @change="upload">
+      <input :id="id" :name="id" type="file" accept="image/*" @change="upload" @click="uploadInProgress">
     </v-btn>
   </form>
 </template>
@@ -22,27 +23,30 @@
     },
     data() {
       return {
-        isUploaded: false,
-        isError:    false
+        isUploaded:  false,
+        isLoading:   false,
+        isError:     false
       }
     },
     methods: {
+      uploadInProgress() {
+      },
       upload: function(e) {
         let file
-
         if (e.target.files[0]) {
           file = e.target.files[0]
         } else {
           return
         }
 
+        this.isUploaded = false
+        this.isError = false
+        this.isLoading = true
+
         let formData = new FormData()
         formData.append('teamId', this.teamId)
         formData.append('challengeId', this.$route.params.id)
         formData.append('image', file)
-
-        this.isUploaded = false
-        this.isError = false
 
         this.$http.post(
           'https://cam-fight-server.herokuapp.com/api/image/add.php',
@@ -57,10 +61,19 @@
             console.info('success')
             this.isError = false
             this.isUploaded = true
+            this.isLoading = false
+
+            setTimeout(() => {
+              this.isError = false
+              this.isUploaded = false
+              this.isLoading = false
+            }, 3000)
+
             this.uploadCallback()
           },
           response => {
             this.isError = true
+            this.isLoading = false
             console.log('☹  Image upload not work. So sad!  ☹')
           })
       }
