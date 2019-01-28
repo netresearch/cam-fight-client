@@ -1,25 +1,25 @@
 <template>
   <v-slide-x-transition>
-    <v-app dark class="deep-purple">
+    <v-app dark class='deep-purple'>
       <ChallengeStatusChecker></ChallengeStatusChecker>
       <v-content>
-        <div class="text-xs-center">
-          <img src="/static/img/team_500.jpg" alt="Team selection" class="image text-xs-center">
+        <div class='text-xs-center'>
+          <img src='/static/img/team_500.jpg' alt='Team selection' class='image text-xs-center'>
         </div>
       </v-content>
 
       <v-container>
 
-        <div class="text-xs-center deep-purple">
+        <div class='text-xs-center deep-purple'>
 
           <h1>Choose your team</h1>
           <p>Your side a team! Experience adventure together and make the best photo!</p>
 
           <v-menu offset-y full-width close-on-click dark>
-            <v-btn class="white" light slot="activator">Choose</v-btn>
+            <v-btn class='white' light slot='activator'>Choose</v-btn>
             <v-list>
-              <v-list-tile v-for="item in items" :key="item.title" @click="" dark>
-                <v-list-tile-title @click="setTeam(item.value)">{{ item.title }}</v-list-tile-title>
+              <v-list-tile v-for='team in teams' :key='team.name' dark>
+                <v-list-tile-title @click='setTeam(team['.key'])'>{{ team.name }}</v-list-tile-title>
               </v-list-tile>
             </v-list>
           </v-menu>
@@ -31,26 +31,27 @@
 
 <script>
   import ChallengeStatusChecker from '@/components/ChallengeStatusChecker'
-
+  import firebase from 'firebase'
+  var config = {
+    apiKey:            'AIzaSyBUyVpLi7S9CuzSTA-7S2VJ0rJ35qerx_8',
+    authDomain:        'camfight-f749f.firebaseapp.com',
+    databaseURL:       'https://camfight-f749f.firebaseio.com',
+    projectId:         'camfight-f749f',
+    storageBucket:     'camfight-f749f.appspot.com',
+    messagingSenderId: '667647303062'
+  }
+  firebase.initializeApp(config)
+  const db = firebase.firestore()
   export default {
     components: {
       ChallengeStatusChecker
     },
-    data:    () => ({
-      items: [
-        { title: 'Team blue', value: 'blue' },
-        { title: 'Team yellow', value: 'yellow' },
-        { title: 'Team red', value: 'red' },
-        { title: 'Team orange', value: 'orange' },
-        { title: 'Team brown', value: 'brown' },
-        { title: 'Team green', value: 'green' },
-        { title: 'Team purple', value: 'purple' },
-        { title: 'Team black', value: 'black' },
-        { title: 'Team gray', value: 'grey' },
-        { title: 'Team teal', value: 'teal' }
-      ]
-    }
-    ),
+    data: {
+      teams: []
+    },
+    firestore: {
+      teams: db.collection('teams')
+    },
     created() {
       if (!this.$cookies.isKey('user')) {
         this.$cookies.set('user', new Date().getTime())
