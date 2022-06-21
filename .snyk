@@ -529,6 +529,8 @@ patch:
         patched: '2022-06-20T22:24:20.934Z'
     - babel-preset-stage-2 > babel-preset-stage-3 > babel-plugin-transform-async-generator-functions > babel-helper-remap-async-to-generator > babel-helper-function-name > babel-template > babel-traverse > babel-types > lodash:
         patched: '2022-06-20T22:24:20.934Z'
+    - css-loader > lodash:
+        patched: '2022-06-21T13:44:02.040Z'
   'npm:lodash:20180130':
     - surge > cli-table2 > lodash:
         patched: '2022-06-20T22:24:20.934Z'
