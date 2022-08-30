@@ -24,7 +24,7 @@
     "@snyk/protect": "1.956.0"
   },
   "devDependencies": {
-    "autoprefixer": "^9.0.0",
+    "autoprefixer": "^10.4.8",
     "babel-core": "^6.26.3",
     "babel-eslint": "^7.1.1",
     "babel-loader": "^7.1.1",
